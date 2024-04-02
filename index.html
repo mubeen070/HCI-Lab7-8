@@ -8,16 +8,31 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+    <style>
+      .card {
+        margin-bottom: 20px;
+      }
+
+      .quantity {
+        margin-top: 10px;
+      }
+
+      .quantity.text-danger {
+        color: red;
+      }
+    </style>
   </head>
   <body>
     <header>
       <div class="container">
         <div class="row align-items-center">
           <div class="container pt-4">
-            <h1 class="col-lg-12 text-center title">My Shopify Store</h1>
+            <h1 class="col-lg-12 text-center title">My Tech Store</h1>
           </div>
           <div class="container">
-            <ul class="nav text-center align-items-center justify-content-center">
+            <ul
+              class="nav text-center align-items-center justify-content-center"
+            >
               <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
               <li class="nav-item"><a class="nav-link" href="#">About</a></li>
@@ -37,58 +52,17 @@
     </section>
 
     <section id="products" class="py-5">
-      <div class="container-fluid">
+      <div class="container">
         <h2 class="text-center mb-4">Featured Products</h2>
-        <div class="row justify-content-center mt-2" id="featured-products">
-          <div class="col-lg-4">
-            <div class="card" style="width: 18rem">
-              <img
-                src="https://media.gamestop.com/i/gamestop/10164324_alt02/PlayStation-4-Slim-Blue-1TB"
-                class="card-img-top"
-                alt="Play Station 5"
-              />
-              <div class="card-body">
-                <h3 class="card-title">Play Station 4 Special Edition</h3>
-                <p class="card-text">$499.99</p>
-                <button
-                  class="btn btn-primary"
-                  onclick="addToCart('Play Station 5')"
-                >
-                  Add to Cart
-                </button>
-                <p>10 available</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="card" style="width: 18rem">
-              <img
-                src="https://th.bing.com/th/id/R.857d13eb743b30dafe124721307338e3?rik=R0iYSy%2fROVXC6Q&pid=ImgRaw&r=0"
-                class="card-img"
-                alt="Play Station 4"
-              />
-              <div class="card mb-4">
-                <img />
-                <div class="card-body">
-                  <h3 class="card-title">Play Station 4 Pro Edition</h3>
-                  <p class="card-text">$249.99</p>
-                  <button
-                    class="btn btn-primary"
-                    onclick="addToCart('Play Station 4')"
-                  >
-                    Add to Cart
-                  </button>
-                  <p>2 available</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div
+          class="row justify-content-center mt-2"
+          id="featured-products"
+        ></div>
       </div>
     </section>
 
     <section id="order" class="bg-light py-5">
-      <div class="container justify-content-center">
+      <div class="container-fluid">
         <div class="col-md-12 text-center mb-4">
           <button
             onclick="loadItems()"
@@ -97,9 +71,13 @@
           >
             Load More
           </button>
+        
+          <div id="loader" class=""></div>
+          <div
+            class="row justify-content-center"
+            id="additional-products"
+          ></div>
         </div>
-        <div id="loader" class="container-fluid"></div>
-        <div class="row justify-content-center" id="additional-products"></div>
       </div>
     </section>
 
@@ -110,13 +88,31 @@
     </footer>
 
     <script>
+      // Array of product details
+      const products = [
+        {
+          name: "Play Station 4 Special Edition",
+          price: "$499.99",
+          imageUrl:
+            "https://media.gamestop.com/i/gamestop/10164324_alt02/PlayStation-4-Slim-Blue-1TB",
+          quantity: 10,
+        },
+        {
+          name: "Play Station 4 Pro Edition",
+          price: "$249.99",
+          imageUrl:
+            "https://th.bing.com/th/id/R.857d13eb743b30dafe124721307338e3?rik=R0iYSy%2fROVXC6Q&pid=ImgRaw&r=0",
+          quantity: 2,
+        },
+        // Add more products here if needed
+      ];
+
       // Function to add product to cart
       function addToCart(productName) {
         // Implement adding product to cart functionality here
         alert(`Added ${productName} to cart!`);
       }
 
-      // Function to load items
       // Function to load items
       function loadItems() {
         document.getElementById("loader").style.display = "block"; // Show loader
@@ -126,33 +122,29 @@
           document.getElementById("loader").style.display = "none"; // Hide loader
 
           // Create HTML for additional products
-          const additionalProductsHTML = `
-      <div class="col-lg-4">
-        <div class="card" style="width: 18rem">
-          <img src="https://media.gamestop.com/i/gamestop/10164324_alt02/PlayStation-4-Slim-Blue-1TB" class="card-img-top" alt="Play Station 5">
-          <div class="card-body">
-            <h3 class="card-title">Play Station 4 Special Edition</h3>
-            <p class="card-text">$499.99</p>
-            <button class="btn btn-primary" onclick="addToCart('Play Station 5')">Add to Cart</button>
-            <p class="${getQuantityClass(10)}">10 available</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2">
-        <div class="card" style="width: 18rem">
-          <img src="https://th.bing.com/th/id/R.857d13eb743b30dafe124721307338e3?rik=R0iYSy%2fROVXC6Q&pid=ImgRaw&r=0" class="card-img" alt="Play Station 4">
-          <div class="card mb-4">
-            <img />
-            <div class="card-body">
-              <h3 class="card-title">Play Station 4 Pro Edition</h3>
-              <p class="card-text">$249.99</p>
-              <button class="btn btn-primary" onclick="addToCart('Play Station 4')">Add to Cart</button>
-              <p class="${getQuantityClass(2)}">2 available</p>
+          const additionalProductsHTML = products
+            .map(
+              (product) => `
+          <div class="col-sm-4 m-4">
+            <div class="card">
+              <img src="${product.imageUrl}" class="card-img-top" alt="${
+                product.name
+              }">
+              <div class="card-body">
+                <h3 class="card-title">${product.name}</h3>
+                <p class="card-text">${product.price}</p>
+                <button class="btn btn-primary" onclick="addToCart('${
+                  product.name
+                }')">Add to Cart</button>
+                <p class="quantity ${getQuantityClass(product.quantity)}">${
+                product.quantity
+              } available</p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    `;
+        `
+            )
+            .join("");
 
           // Insert the additional products HTML into the DOM
           document.getElementById("additional-products").innerHTML =
@@ -167,6 +159,39 @@
       function getQuantityClass(quantity) {
         return quantity < 5 ? "text-danger" : "";
       }
+
+      // Function to initialize featured products
+      function initFeaturedProducts() {
+        const featuredProductsHTML = products
+          .map(
+            (product) => `
+        <div class="col-sm-4 m-4">
+          <div class="card">
+            <img src="${product.imageUrl}" class="card-img-top" alt="${
+              product.name
+            }">
+            <div class="card-body">
+              <h3 class="card-title">${product.name}</h3>
+              <p class="card-text">${product.price}</p>
+              <button class="btn btn-primary" onclick="addToCart('${
+                product.name
+              }')">Add to Cart</button>
+              <p class="quantity ${getQuantityClass(product.quantity)}">${
+              product.quantity
+            } available</p>
+            </div>
+          </div>
+        </div>
+      `
+          )
+          .join("");
+
+        document.getElementById("featured-products").innerHTML =
+          featuredProductsHTML;
+      }
+
+      // Initialize featured products
+      initFeaturedProducts();
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
