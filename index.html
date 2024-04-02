@@ -20,6 +20,10 @@
       .quantity.text-danger {
         color: red;
       }
+
+      .row {
+        align-items-center;
+      }
     </style>
   </head>
   <body>
@@ -71,7 +75,7 @@
           >
             Load More
           </button>
-        
+
           <div id="loader" class=""></div>
           <div
             class="row justify-content-center"
@@ -88,8 +92,7 @@
     </footer>
 
     <script>
-      // Array of product details
-      const products = [
+      const featuredProds = [
         {
           name: "Play Station 4 Special Edition",
           price: "$499.99",
@@ -104,7 +107,36 @@
             "https://th.bing.com/th/id/R.857d13eb743b30dafe124721307338e3?rik=R0iYSy%2fROVXC6Q&pid=ImgRaw&r=0",
           quantity: 2,
         },
-        // Add more products here if needed
+      ];
+      const products = [
+        {
+          name: "XBox Series X Black Edition",
+          price: "$499.99",
+          imageUrl:
+            "https://images-na.ssl-images-amazon.com/images/I/51A41nLe5IL._SL1200_.jpg",
+          quantity: 6,
+        },
+        {
+          name: "Nintendo Switch OLED Model",
+          price: "$249.99",
+          imageUrl:
+            "https://th.bing.com/th/id/OIP.Iz639T6P6-VqF3itCgXkIQAAAA?rs=1&pid=ImgDetMain",
+          quantity: 4,
+        },
+        {
+          name: "Play Station 4 Special Edition",
+          price: "$499.99",
+          imageUrl:
+            "https://media.gamestop.com/i/gamestop/10164324_alt02/PlayStation-4-Slim-Blue-1TB",
+          quantity: 10,
+        },
+        {
+          name: "Play Station 4 Pro Edition",
+          price: "$249.99",
+          imageUrl:
+            "https://th.bing.com/th/id/R.857d13eb743b30dafe124721307338e3?rik=R0iYSy%2fROVXC6Q&pid=ImgRaw&r=0",
+          quantity: 2,
+        },
       ];
 
       // Function to add product to cart
@@ -152,6 +184,7 @@
 
           // Hide the Load More button
           document.getElementById("loadMoreBtn").style.display = "none";
+          document.getElementById("loadMoreBtn").style.display = "none";
         }, 2000); // Simulating a 2-second loading time
       }
 
@@ -162,7 +195,7 @@
 
       // Function to initialize featured products
       function initFeaturedProducts() {
-        const featuredProductsHTML = products
+        const featuredProductsHTML = featuredProds
           .map(
             (product) => `
         <div class="col-sm-4 m-4">
